@@ -1,121 +1,215 @@
-<script type="text/javascript">
-  var gk_isXlsx = false;
-  var gk_xlsxFileLookup = {};
-  var gk_fileData = {};
-  function filledCell(cell) {
-    return cell !== "" && cell != null;
-  }
-  function loadFileData(filename) {
-    if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-      try {
-        var workbook = XLSX.read(gk_fileData[filename], { type: "base64" });
-        var firstSheetName = workbook.SheetNames[0];
-        var worksheet = workbook.Sheets[firstSheetName];
-
-        // Convert sheet to JSON to filter blank rows
-        var jsonData = XLSX.utils.sheet_to_json(worksheet, {
-          header: 1,
-          blankrows: false,
-          defval: "",
-        });
-        // Filter out blank rows (rows where all cells are empty, null, or undefined)
-        var filteredData = jsonData.filter((row) => row.some(filledCell));
-
-        // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-        var headerRowIndex = filteredData.findIndex(
-          (row, index) =>
-            row.filter(filledCell).length >=
-            filteredData[index + 1]?.filter(filledCell).length
-        );
-        // Fallback
-        if (headerRowIndex === -1 || headerRowIndex > 25) {
-          headerRowIndex = 0;
-        }
-
-        // Convert filtered JSON back to CSV
-        var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-        csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-        return csv;
-      } catch (e) {
-        console.error(e);
-        return "";
-      }
-    }
-    return gk_fileData[filename] || "";
-  }
-</script>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Button Navigation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold text-center text-gray-800 mb-12">
-        Welcome to the Navigation Hub
-      </h1>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="https://samantha-web.github.io/timecaltube/" class="group">
-          <button
-            class="w-full bg-blue-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 transform group-hover:scale-105"
-          >
-            Cutting
-          </button>
-        </a>
-        <a href="https://samantha-web.github.io/swagging/" class="group">
-          <button
-            class="w-full bg-orange-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-orange-700 transition duration-300 transform group-hover:scale-105"
-          >
-            Swagging
-          </button>
-          </a>
-        <a href="https://samantha-web.github.io/fabrication/" class="group">
-          <button
-            class="w-full bg-red-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-red-700 transition duration-300 transform group-hover:scale-105"
-          >
-            Fabrication
-          </button>
-        </a>
-        </a>
-        <a href="https://samantha-web.github.io/t4/" class="group">
-          <button
-            class="w-full bg-green-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-green-700 transition duration-300 transform group-hover:scale-105"
-          >
-            T4
-          </button>
-        </a>
-        <a href="https://samantha-web.github.io/t6/" class="group">
-          <button
-            class="w-full bg-purple-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-purple-700 transition duration-300 transform group-hover:scale-105"
-          >
-            T6
-          </button>
-        </a>
-        <a href="https://samantha-web.github.io/Rhub_cen_to_tire_center_calal/" class="group">
-          <button
-            class="w-full bg-teal-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-teal-700 transition duration-300 transform group-hover:scale-105"
-          >
-            Rear Hub to Tire
-          </button>
-        </a>
-        <a href="https://samantha-web.github.io/chainlinkcal/" class="group">
-          <button
-            class="w-full bg-yellow-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-yellow-700 transition duration-300 transform group-hover:scale-105"
-          >
-            Chain Link
-          </button>
-        </a>
-        <a href="#" class="group">
-          <button
-            class="w-full bg-cyan-600 text-white text-2xl font-semibold py-6 px-8 rounded-lg shadow-lg hover:bg-cyan-700 transition duration-300 transform group-hover:scale-105"
-          >
-            Container Loading
-          </button>
-        </a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      --header-gradient: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+    }
+    
+    .nav-card {
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+    
+    .nav-button {
+      background: linear-gradient(145deg, var(--start-color), var(--end-color));
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform: translateZ(0);
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+    
+    .nav-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(30deg);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .nav-button:hover::before {
+      opacity: 1;
+    }
+    
+    .nav-button:hover {
+      transform: translateY(-8px) translateZ(10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .nav-button i {
+      transition: transform 0.3s ease;
+    }
+    
+    .nav-button:hover i {
+      transform: scale(1.2);
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .header-text {
+      background: var(--header-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'diff-blue': '#3b82f6',
+            'diff-orange': '#f97316',
+            'diff-red': '#ef4444',
+            'diff-green': '#22c55e',
+            'diff-purple': '#8b5cf6',
+            'diff-teal': '#14b8a6',
+            'diff-yellow': '#eab308',
+            'diff-cyan': '#06b6d4'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+  <div class="w-full max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <div class="inline-block bg-white rounded-full p-3 shadow-lg mb-4 pulse">
+        <i class="fas fa-compass text-3xl text-blue-500"></i>
       </div>
+      <h1 class="text-4xl md:text-5xl font-bold mb-2 header-text">Navigation Hub</h1>
+      <p class="text-gray-600 max-w-md mx-auto">Quick access to all your calculation tools</p>
     </div>
-  </body>
+    
+    <!-- Navigation Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <!-- Cutting -->
+      <a href="https://samantha-web.github.io/timecaltube/" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #93c5fd; --end-color: #3b82f6">
+          <i class="fas fa-cut text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">Cutting</h3>
+          <p class="text-blue-100 text-sm">Time calculations for tube cutting</p>
+        </div>
+      </a>
+      
+      <!-- Swagging -->
+      <a href="https://samantha-web.github.io/swagging/" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #fdba74; --end-color: #f97316">
+          <i class="fas fa-hammer text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">Swagging</h3>
+          <p class="text-orange-100 text-sm">Swagging tool calculations</p>
+        </div>
+      </a>
+      
+      <!-- Fabrication -->
+      <a href="https://samantha-web.github.io/fabrication/" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #fca5a5; --end-color: #ef4444">
+          <i class="fas fa-industry text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">Fabrication</h3>
+          <p class="text-red-100 text-sm">Fabrication process tools</p>
+        </div>
+      </a>
+      
+      <!-- T4 -->
+      <a href="https://samantha-web.github.io/t4/" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #86efac; --end-color: #22c55e">
+          <i class="fas fa-cogs text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">T4</h3>
+          <p class="text-green-100 text-sm">T4 process calculators</p>
+        </div>
+      </a>
+      
+      <!-- T6 -->
+      <a href="https://samantha-web.github.io/t6/" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #c4b5fd; --end-color: #8b5cf6">
+          <i class="fas fa-microchip text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">T6</h3>
+          <p class="text-purple-100 text-sm">Advanced T6 calculation tools</p>
+        </div>
+      </a>
+      
+      <!-- Rear Hub to Tire -->
+      <a href="https://samantha-web.github.io/Rhub_cen_to_tire_center_calal/" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #5eead4; --end-color: #14b8a6">
+          <i class="fas fa-tire text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">Rear Hub to Tire</h3>
+          <p class="text-teal-100 text-sm">Center distance calculations</p>
+        </div>
+      </a>
+      
+      <!-- Chain Link -->
+      <a href="https://samantha-web.github.io/chainlinkcal/" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #fde047; --end-color: #eab308">
+          <i class="fas fa-link text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">Chain Link</h3>
+          <p class="text-yellow-100 text-sm">Chain link calculations</p>
+        </div>
+      </a>
+      
+      <!-- Container Loading -->
+      <a href="#" class="nav-card">
+        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+             style="--start-color: #67e8f9; --end-color: #06b6d4">
+          <i class="fas fa-shipping-fast text-3xl mb-4 text-white"></i>
+          <h3 class="text-xl font-semibold text-white mb-2">Container Loading</h3>
+          <p class="text-cyan-100 text-sm">Container loading calculators</p>
+        </div>
+      </a>
+    </div>
+    
+    <!-- Footer -->
+    <div class="mt-12 text-center text-gray-500 text-sm">
+      <p>All tools in one place</p>
+    </div>
+  </div>
+  
+  <script>
+    // Add hover effects for mobile touch
+    document.querySelectorAll('.nav-button').forEach(button => {
+      button.addEventListener('touchstart', function() {
+        this.classList.add('hover:translate-y-[-8px]');
+        setTimeout(() => {
+          this.classList.remove('hover:translate-y-[-8px]');
+        }, 300);
+      });
+    });
+  </script>
+</body>
 </html>
