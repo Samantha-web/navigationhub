@@ -1,237 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Navigation Hub</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-    
-    :root {
-      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-      --header-gradient: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
-    }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg-gradient);
-      min-height: 100vh;
-    }
-    
-    .nav-card {
-      perspective: 1000px;
-      transform-style: preserve-3d;
-    }
-    
-    .nav-button {
-      background: linear-gradient(145deg, var(--start-color), var(--end-color));
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      transform: translateZ(0);
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-    }
-    
-    .nav-button::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-      transform: rotate(30deg);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .nav-button:hover::before {
-      opacity: 1;
-    }
-    
-    .nav-button:hover {
-      transform: translateY(-8px) translateZ(10px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-    }
-    
-    .nav-button i {
-      transition: transform 0.3s ease;
-    }
-    
-    .nav-button:hover i {
-      transform: scale(1.2);
-    }
-    
-    .pulse {
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% {-dot1 { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    
-    .header-text {
-      background: var(--header-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  </style>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'diff-blue': '#3b82f6',
-            'diff-orange': '#f97316',
-            'diff-red': '#ef4444',
-            'diff-green': '#22c55e',
-            'diff-purple': '#8b5cf6',
-            'diff-teal': '#14b8a6',
-            'diff-yellow': '#eab308',
-            'diff-cyan': '#06b6d4',
-            'diff-pink': '#ec4899',
-            'diff-indigo': '#6366f1'
-          }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigation Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+      :root {
+        --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        --header-gradient: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-gradient);
+        min-height: 100vh;
+      }
+
+      .nav-card {
+        perspective: 1000px;
+        transform-style: preserve-3d;
+      }
+
+      .nav-button {
+        background: linear-gradient(
+          145deg,
+          var(--start-color),
+          var(--end-color)
+        );
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: translateZ(0);
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+      }
+
+      .nav-button::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        transform: rotate(30deg);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .nav-button:hover::before {
+        opacity: 1;
+      }
+
+      .nav-button:hover {
+        transform: translateY(-8px) translateZ(10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .nav-button i {
+        transition: transform 0.3s ease;
+      }
+
+      .nav-button:hover i {
+        transform: scale(1.2);
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
         }
       }
-    }
-  </script>
-</head>
-<body class="flex items-center justify-center min-h-screen p-4">
-  <div class="w-full max-w-4xl">
-    <!-- Header -->
-    <div class="text-center mb-10">
-      <div class="inline-block bg-white rounded-full p-3 shadow-lg mb-4 pulse">
-        <i class="fas fa-compass text-3xl text-blue-500"></i>
+
+      .header-text {
+        background: var(--header-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "diff-blue": "#3b82f6",
+              "diff-orange": "#f97316",
+              "diff-red": "#ef4444",
+              "diff-green": "#22c55e",
+              "diff-purple": "#8b5cf6",
+              "diff-teal": "#14b8a6",
+              "diff-yellow": "#eab308",
+              "diff-cyan": "#06b6d4",
+              "diff-pink": "#ec4899",
+              "diff-indigo": "#6366f1",
+              "diff-amber": "#f59e0b", // New color for Rim
+              "diff-gray": "#6b7280", // New color for Stores
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-4xl">
+      <!-- Header -->
+      <div class="text-center mb-10">
+        <div
+          class="inline-block bg-white rounded-full p-3 shadow-lg mb-4 pulse"
+        >
+          <i class="fas fa-compass text-3xl text-blue-500"></i>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-2 header-text">
+          Navigation Hub
+        </h1>
+        <p class="text-gray-600 max-w-md mx-auto">
+          Quick access to all your calculation tools
+        </p>
       </div>
-      <h1 class="text-4xl md:text-5xl font-bold mb-2 header-text">Navigation Hub</h1>
-      <p class="text-gray-600 max-w-md mx-auto">Quick access to all your calculation tools</p>
-    </div>
-    
-    <!-- Navigation Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      <!-- Cutting -->
-      <a href="https://samantha-web.github.io/timecaltube/" class="nav-card">
-        <div class="nav-button hfull flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #93c5fd; --end-color: #3b82f6">
-          <i class="fas fa-cut text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Cutting</h3>
-          <p class="text-blue-100 text-sm">Time calculations for tube cutting</p>
-        </div>
-      </a>
-      
-      <!-- Swagging -->
-      <a href="https://samantha-web.github.io/swagging/" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #fdba74; --end-color: #f97316">
-          <i class="fas fa-hammer text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Swagging</h3>
-          <p class="text-orange-100 text-sm">Swagging tool calculations</p>
-        </div>
-      </a>
-      
-      <!-- Fabrication -->
-      <a href="https://samantha-web.github.io/fabrication/" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #fca5a5; --end-color: #ef4444">
-          <i class="fas fa-industry text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Fabrication</h3>
-          <p class="text-red-100 text-sm">Fabrication process tools</p>
-        </div>
-      </a>
-      
-      <!-- T4 -->
-      <a href="https://samantha-web.github.io/t4/" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #86efac; --end-color: #22c55e">
-          <i class="fas fa-cogs text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">T4</h3>
-          <p class="text-green-100 text-sm">T4 process calculators</p>
-        </div>
-      </a>
-      
-      <!-- T6 -->
-      <a href="https://samantha-web.github.io/t6/" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #c4b5fd; --end-color: #8b5cf6">
-          <i class="fas fa-microchip text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">T6</h3>
-          <p class="text-purple-100 text-sm">Advanced T6 calculation tools</p>
-        </div>
-      </a>
-      
-      <!-- Rear Hub to Tire -->
-      <a href="https://samantha-web.github.io/Rhub_cen_to_tire_center_calal/" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #5eead4; --end-color: #14b8a6">
-          <i class="fas fa-tire text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Rear Hub to Tire</h3>
-          <p class="text-teal-100 text-sm">Center distance calculations</p>
-        </div>
-      </a>
-      
-      <!-- Chain Link -->
-      <a href="https://samantha-web.github.io/chainlinkcal/" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-centerTO p-6 text-center"
-             style="--start-color: #fde047; --end-color: #eab308">
-          <i class="fas fa-link text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Chain Link</h3>
-          <p class="text-yellow-100 text-sm">Chain link calculations</p>
-        </div>
-      </a>
-      
-      <!-- Container Loading -->
-      <a href="#" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #67e8f9; --end-color: #06b6d4">
-          <i class="fas fa-shipping-fast text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Container Loading</h3>
-          <p class="text-cyan-100 text-sm">Container loading calculators</p>
-        </div>
-      </a>
 
-      <!-- Bicycle Chainline Calculator -->
-      <a href="https://samantha-web.github.io/front-rear-chain-line/" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #f9a8d4; --end-color: #ec4899">
-          <i class="fas fa-bicycle text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Bicycle Chainline Calculator</h3>
-          <p class="text-pink-100 text-sm">Chainline alignment calculations</p>
-        </div>
-      </a>
+      <!-- Navigation Grid -->
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
+      >
+        <!-- Existing buttons... -->
+        <!-- Cutting -->
+        <a href="https://samantha-web.github.io/timecaltube/" class="nav-card">
+          <div
+            class="nav-button hfull flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #93c5fd; --end-color: #3b82f6"
+          >
+            <i class="fas fa-cut text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">Cutting</h3>
+            <p class="text-blue-100 text-sm">
+              Time calculations for tube cutting
+            </p>
+          </div>
+        </a>
 
-      <!-- Bicycle Bottom Bracket Dimensions -->
-      <a href="https://samantha-web.github.io/front-rear-chain-line/Bottom%20Bracket%20Dimensions.html" class="nav-card">
-        <div class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
-             style="--start-color: #a5b4fc; --end-color: #6366f1">
-          <i class="fas fa-wrench text-3xl mb-4 text-white"></i>
-          <h3 class="text-xl font-semibold text-white mb-2">Bottom Bracket Dimensions</h3>
-          <p class="text-indigo-100 text-sm">Bicycle bottom bracket measurements</p>
-        </div>
-      </a>
+        <!-- Swagging -->
+        <a href="https://samantha-web.github.io/swagging/" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #fdba74; --end-color: #f97316"
+          >
+            <i class="fas fa-hammer text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">Swagging</h3>
+            <p class="text-orange-100 text-sm">Swagging tool calculations</p>
+          </div>
+        </a>
+
+        <!-- Fabrication -->
+        <a href="https://samantha-web.github.io/fabrication/" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #fca5a5; --end-color: #ef4444"
+          >
+            <i class="fas fa-industry text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">Fabrication</h3>
+            <p class="text-red-100 text-sm">Fabrication process tools</p>
+          </div>
+        </a>
+
+        <!-- T4 -->
+        <a href="https://samantha-web.github.io/t4/" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #86efac; --end-color: #22c55e"
+          >
+            <i class="fas fa-cogs text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">T4</h3>
+            <p class="text-green-100 text-sm">T4 process calculators</p>
+          </div>
+        </a>
+
+        <!-- T6 -->
+        <a href="https://samantha-web.github.io/t6/" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #c4b5fd; --end-color: #8b5cf6"
+          >
+            <i class="fas fa-microchip text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">T6</h3>
+            <p class="text-purple-100 text-sm">Advanced T6 calculation tools</p>
+          </div>
+        </a>
+
+        <!-- Rear Hub to Tire -->
+        <a
+          href="https://samantha-web.github.io/Rhub_cen_to_tire_center_calal/"
+          class="nav-card"
+        >
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #5eead4; --end-color: #14b8a6"
+          >
+            <i class="fas fa-tire text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">
+              Rear Hub to Tire
+            </h3>
+            <p class="text-teal-100 text-sm">Center distance calculations</p>
+          </div>
+        </a>
+
+        <!-- Chain Link -->
+        <a href="https://samantha-web.github.io/chainlinkcal/" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-centerTO p-6 text-center"
+            style="--start-color: #fde047; --end-color: #eab308"
+          >
+            <i class="fas fa-link text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">Chain Link</h3>
+            <p class="text-yellow-100 text-sm">Chain link calculations</p>
+          </div>
+        </a>
+
+        <!-- Container Loading -->
+        <a href="https://samantha-web.github.io/concalnew/" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #67e8f9; --end-color: #06b6d4"
+          >
+            <i class="fas fa-shipping-fast text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">
+              Container Loading
+            </h3>
+            <p class="text-cyan-100 text-sm">Container loading calculators</p>
+          </div>
+        </a>
+
+        <!-- Bicycle Chainline Calculator -->
+        <a
+          href="https://samantha-web.github.io/front-rear-chain-line/"
+          class="nav-card"
+        >
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #f9a8d4; --end-color: #ec4899"
+          >
+            <i class="fas fa-bicycle text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">
+              Bicycle Chainline Calculator
+            </h3>
+            <p class="text-pink-100 text-sm">
+              Chainline alignment calculations
+            </p>
+          </div>
+        </a>
+
+        <!-- Bicycle Bottom Bracket Dimensions -->
+        <a
+          href="https://samantha-web.github.io/front-rear-chain-line/Bottom%20Bracket%20Dimensions.html"
+          class="nav-card"
+        >
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #a5b4fc; --end-color: #6366f1"
+          >
+            <i class="fas fa-wrench text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">
+              Bottom Bracket Dimensions
+            </h3>
+            <p class="text-indigo-100 text-sm">
+              Bicycle bottom bracket measurements
+            </p>
+          </div>
+        </a>
+        <!-- Rim Button -->
+        <a href="https://samantha-web.github.io/rim/" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #fde68a; --end-color: #f59e0b"
+          >
+            <i class="fas fa-circle-notch text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">Rim</h3>
+            <p class="text-amber-100 text-sm">Rim measurements and specs</p>
+          </div>
+        </a>
+
+        <!-- Stores Button -->
+        <a href="#" class="nav-card">
+          <div
+            class="nav-button h-full flex flex-col items-center justify-center p-6 text-center"
+            style="--start-color: #e5e7eb; --end-color: #6b7280"
+          >
+            <i class="fas fa-warehouse text-3xl mb-4 text-white"></i>
+            <h3 class="text-xl font-semibold text-white mb-2">Stores</h3>
+            <p class="text-gray-100 text-sm">Inventory and storage tools</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-12 text-center text-gray-500 text-sm">
+        <p>All tools in one place</p>
+      </div>
     </div>
-    
-    <!-- Footer -->
-    <div class="mt-12 text-center text-gray-500 text-sm">
-      <p>All tools in one place</p>
-    </div>
-  </div>
-  
-  <script>
-    // Add hover effects for mobile touch
-    document.querySelectorAll('.nav-button').forEach(button => {
-      button.addEventListener('touchstart', function() {
-        this.classList.add('hover:translate-y-[-8px]');
-        setTimeout(() => {
-          this.classList.remove('hover:translate-y-[-8px]');
-        }, 300);
+
+    <script>
+      // Add hover effects for mobile touch
+      document.querySelectorAll(".nav-button").forEach((button) => {
+        button.addEventListener("touchstart", function () {
+          this.classList.add("hover:translate-y-[-8px]");
+          setTimeout(() => {
+            this.classList.remove("hover:translate-y-[-8px]");
+          }, 300);
+        });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
