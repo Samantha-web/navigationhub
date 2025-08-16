@@ -1,0 +1,268 @@
+
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+      :root {
+        --bg-gradient: linear-gradient(135deg, #1a1f36 0%, #0d1323 100%);
+        --header-gradient: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        --card-gradient: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-gradient);
+        min-height: 100vh;
+        color: #e2e8f0;
+        transition: all 0.5s ease;
+      }
+
+      .login-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 15, 30, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+      }
+
+      .login-form {
+        background: var(--card-gradient);
+        padding: 2.5rem;
+        border-radius: 16px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(101, 119, 179, 0.2);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #cbd5e1;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 1rem;
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(101, 119, 179, 0.3);
+        border-radius: 8px;
+        color: #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .form-input:focus {
+        border-color: #667eea;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+      }
+
+      .submit-btn {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .error-message {
+        color: #f87171;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        height: 20px;
+      }
+
+      .attempts-counter {
+        color: #94a3b8;
+        font-size: 0.8rem;
+        margin-top: 15px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .shake {
+        animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20%,
+        60% {
+          transform: translateX(-10px);
+        }
+        40%,
+        80% {
+          transform: translateX(10px);
+        }
+      }
+
+      .nav-card {
+        perspective: 1000px;
+        transform-style: preserve-3d;
+      }
+
+      .nav-button {
+        background: linear-gradient(
+          145deg,
+          var(--start-color),
+          var(--end-color)
+        );
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: translateZ(0);
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        height: 100%;
+      }
+
+      .nav-button::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        transform: rotate(30deg);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .nav-button:hover::before {
+        opacity: 1;
+      }
+
+      .nav-button:hover {
+        transform: translateY(-8px) translateZ(10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-button i {
+        transition: transform 0.3s ease;
+      }
+
+      .nav-button:hover i {
+        transform: scale(1.2);
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .header-text {
+        background: var(--header-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .user-info {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(30, 41, 59, 0.8);
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(101, 119, 179, 0.2);
+      }
+
+      .log-entry {
+        background: rgba(15, 23, 42, 0.7);
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 0.8rem;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+
+      .log-entry div {
+        border-bottom: 1px solid rgba(101, 119, 179, 0.2);
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+      }
+
+      .security-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(30, 41, 59, 0.8);
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(101, 119, 179, 0.2);
+      }
+
+      .security-icon {
+        color: #4ade80;
+        margin-right: 5px;
+      }
+
+      .grid-container {
+        position: relative;
+        z-index: 2;
+      }
+
+      .watermark {
+        position: absolute;
+        opacity: 0.03;
+        font-size: 20rem;
+        font-weight: 800;
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-30deg);
+        background: var(--header-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        pointer-events: none;
+      }
+    
